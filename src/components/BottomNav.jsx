@@ -12,11 +12,15 @@ const BottomNav = () => {
       <Link to="/">
         <BsHouse className="BN-icon" />
       </Link>
-      <Link>
+      <Link to="/upload">
         <BiAddToQueue className="BN-icon" />
       </Link>
       <Link to="/profile">
-        <img src={user.photoURL} alt="user-image" className="BN-prot-pic" />
+        <img
+          src={user ? user.photoURL : null}
+          alt="user-image"
+          className="BN-prot-pic"
+        />
       </Link>
     </div>
   );
