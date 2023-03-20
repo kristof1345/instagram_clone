@@ -18,7 +18,6 @@ const Dashboard = () => {
 
   const q = query(collectionRef, orderBy("timestamp"));
   const [posts, loading, error] = useCollectionData(q);
-  console.log(posts);
 
   return (
     <div className="App">

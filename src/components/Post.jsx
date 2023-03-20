@@ -5,7 +5,6 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 const Post = ({ post }) => {
-  console.log(post.imageUrl);
   return (
     <div className="post">
       <div className="post-prof-sec">
