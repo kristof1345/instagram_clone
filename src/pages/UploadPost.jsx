@@ -3,12 +3,17 @@ import BottomNav from "../components/BottomNav";
 import { v4 } from "uuid";
 
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+
+import { useAuthState } from "react-firebase-hooks/auth";
 
 import { app, database, auth, storage } from "../firebaseConfig";
 
 const UploadPost = () => {
+  const [user] = useAuthState(auth);
   const [imageUpload, setImageUpload] = useState(null);
   const [descUpload, setDescUpload] = useState("");
+  const collectionRef = collection(database, "posts");
 
   const uploadImage = () => {
     let imageName = imageUpload.name + v4();
@@ -17,7 +22,12 @@ const UploadPost = () => {
     uploadBytes(imageRef, imageUpload).then(() => {
       getDownloadURL(ref(storage, `images/${imageName}`))
         .then((url) => {
-          console.log(url);
+          addDoc(collectionRef, {
+            timestamp: serverTimestamp(),
+            description: descUpload,
+            imageUrl: url,
+            username: user.displayName,
+          });
         })
         .catch((err) => {
           console.log(err);
