@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 import { Link } from "react-router-dom";
 
 const Post = ({ post }) => {
+  const [liked, setLiked] = useState(false);
+
   return (
     <div className="post">
       <div className="post-prof-sec">

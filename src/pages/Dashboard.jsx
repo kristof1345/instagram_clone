@@ -19,13 +19,19 @@ const Dashboard = () => {
   const q = query(collectionRef, orderBy("timestamp"));
   const [posts, loading, error] = useCollectionData(q);
 
+  console.log(posts);
+
   return (
     <div className="App">
       <Header />
       <div className="stories">
         <img src={user.photoURL} alt="photo" className="story" />
       </div>
-      {posts ? <Posts posts={posts} /> : <NoPosts />}
+      {posts !== undefined && posts.length !== 0 ? (
+        <Posts posts={posts} />
+      ) : (
+        <NoPosts />
+      )}
       <BottomNav />
     </div>
   );

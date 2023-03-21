@@ -3,7 +3,13 @@ import BottomNav from "../components/BottomNav";
 import { v4 } from "uuid";
 
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  serverTimestamp,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -27,6 +33,13 @@ const UploadPost = () => {
             description: descUpload,
             imageUrl: url,
             username: user.displayName,
+            likes: 0,
+            id: "",
+          }).then((docRef) => {
+            let docToUp = doc(database, "posts", docRef.id);
+            updateDoc(docToUp, {
+              id: docRef.id,
+            });
           });
         })
         .catch((err) => {
