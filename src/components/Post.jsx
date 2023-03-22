@@ -1,37 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
-import {
-  collection,
-  serverTimestamp,
-  doc,
-  updateDoc,
-} from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 
 import { Link } from "react-router-dom";
+
+import { useAuthState } from "react-firebase-hooks/auth";
 
 import { app, database, auth, storage } from "../firebaseConfig";
 
 const Post = ({ post }) => {
+  const [user] = useAuthState(auth);
   const [liked, setLiked] = useState(false);
 
   const updateLikes = () => {
     let likesCount = post.likes;
+    let userLikes = post.usersWhoLiked;
     if (!liked) {
-      console.log("like++");
+      // like + 1
       let docRef = doc(database, "posts", post.id);
       updateDoc(docRef, {
         likes: (likesCount += 1),
+        usersWhoLiked: [...userLikes, user.uid],
       });
     } else if (liked) {
-      console.log("like--");
+      // like - 1
+      let ind = userLikes.indexOf(user.id);
+      userLikes.splice(ind, 1);
       let docRef = doc(database, "posts", post.id);
       updateDoc(docRef, {
         likes: (likesCount -= 1),
+        usersWhoLiked: userLikes,
       });
     }
   };
+
+  useEffect(() => {
+    let users = post.usersWhoLiked;
+    if (users.includes(user.uid)) {
+      setLiked(true);
+    }
+  }, []);
 
   return (
     <div className="post">

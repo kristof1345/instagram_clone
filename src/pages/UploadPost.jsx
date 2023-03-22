@@ -35,6 +35,7 @@ const UploadPost = () => {
             username: user.displayName,
             likes: 0,
             id: "",
+            usersWhoLiked: [],
           }).then((docRef) => {
             let docToUp = doc(database, "posts", docRef.id);
             updateDoc(docToUp, {
