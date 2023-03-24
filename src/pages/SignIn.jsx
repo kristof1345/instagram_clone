@@ -25,6 +25,7 @@ const SignIn = () => {
 
   const signInWithGoogle = () => {
     const provider = new GoogleAuthProvider();
+
     signInWithPopup(auth, provider).then((x) => {
       findOtherUsers(x.user.email).then((shouldCreateAUser) => {
         if (shouldCreateAUser) {

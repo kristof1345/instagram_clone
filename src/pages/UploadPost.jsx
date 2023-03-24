@@ -9,6 +9,7 @@ import {
   serverTimestamp,
   doc,
   updateDoc,
+  getDocs,
 } from "firebase/firestore";
 
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -20,6 +21,7 @@ const UploadPost = () => {
   const [imageUpload, setImageUpload] = useState(null);
   const [descUpload, setDescUpload] = useState("");
   const collectionRef = collection(database, "posts");
+  const usersRef = collection(database, "users");
 
   const uploadImage = () => {
     let imageName = imageUpload.name + v4();
@@ -42,11 +44,26 @@ const UploadPost = () => {
             updateDoc(docToUp, {
               id: docRef.id,
             });
+            pushPostToUser(docRef.id);
           });
         })
         .catch((err) => {
           console.log(err);
         });
+    });
+  };
+
+  const pushPostToUser = async (postID) => {
+    let arr = [];
+    const querySnapshot = await getDocs(usersRef);
+    querySnapshot.forEach((doc) => {
+      arr.push(doc.data());
+    });
+    let currUser = arr.filter((elem) => elem.uid === user.uid);
+    let prevPosts = currUser[0].postIDs;
+    let docToUp = doc(database, "users", currUser[0].id);
+    updateDoc(docToUp, {
+      postIDs: [...prevPosts, postID],
     });
   };
 
