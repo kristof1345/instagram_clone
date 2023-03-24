@@ -11,6 +11,7 @@ import {
   doc,
   updateDoc,
   orderBy,
+  getDocs,
 } from "firebase/firestore";
 
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -25,34 +26,43 @@ const SignIn = () => {
   const signInWithGoogle = () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider).then((x) => {
-      if (findOtherUsers(x.user.email)) {
-        addDoc(collectionRef, {
-          displayName: x.user.displayName,
-          email: x.user.email,
-          photoURL: x.user.photoURL,
-          uid: x.user.uid,
-          id: "",
-        }).then((docRef) => {
-          let docToUp = doc(database, "users", docRef.id);
-          updateDoc(docToUp, {
-            id: docRef.id,
-          }).catch((err) => console.log(err));
-        });
-      }
+      findOtherUsers(x.user.email).then((shouldCreateAUser) => {
+        if (shouldCreateAUser) {
+          addDoc(collectionRef, {
+            displayName: x.user.displayName,
+            email: x.user.email,
+            photoURL: x.user.photoURL,
+            uid: x.user.uid,
+            id: "",
+            followers: [],
+            following: [],
+            postIDs: [],
+          }).then((docRef) => {
+            let docToUp = doc(database, "users", docRef.id);
+            updateDoc(docToUp, {
+              id: docRef.id,
+            }).catch((err) => console.log(err));
+          });
+        }
+      });
     });
   };
 
-  const findOtherUsers = (email) => {
-    const collectionRef = collection(database, "users");
-    const q = query(collectionRef, orderBy("email"));
-    const [users, loading, error] = useCollectionData(q);
+  const findOtherUsers = async (email) => {
     let res = true;
-    users.map((user) => {
-      console.log(user);
-      if (user.eamil === email) {
-        res = false;
-      }
+    let arr = [];
+    const querySnapshot = await getDocs(collectionRef);
+    querySnapshot.forEach((doc) => {
+      arr.push(doc.data());
     });
+    if (arr.length > 0) {
+      arr.map((user) => {
+        console.log(user);
+        if (user.email == email) {
+          res = false;
+        }
+      });
+    }
     return res;
   };
 
