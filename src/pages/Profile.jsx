@@ -1,6 +1,6 @@
 import BottomNav from "../components/BottomNav";
-import ProfPosts from "../components/ProfPosts";
 import NoPosts from "../components/NoPosts";
+import SmallPost from "../components/SmallPost";
 
 import { collection, query } from "firebase/firestore";
 
@@ -8,13 +8,10 @@ import { app, database, auth, storage } from "../firebaseConfig";
 
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import { useState } from "react";
 
 const Profile = () => {
   const [user] = useAuthState(auth);
-  const [postids, setPostids] = useState([]);
   let currUser;
-  const x = false;
 
   const usersRef = collection(database, "users");
   const q = query(usersRef);
@@ -60,18 +57,19 @@ const Profile = () => {
           <div>following</div>
         </div>
       </div>
+
       {currUser ? (
         currUser.postIDs.length > 0 ? (
-          <ProfPosts currUser={currUser} />
+          <div className="posts-grid">
+            {currUser.postIDs.map((postID, i) => (
+              <SmallPost postID={postID} key={i} />
+            ))}
+          </div>
         ) : (
           <NoPosts styles={{ height: "65vh" }} />
         )
       ) : null}
-      {/* {postids.length > 0 ? (
-        <ProfPosts currUser={currUser} />
-      ) : (
-        <NoPosts styles={{ height: "65vh" }} />
-      )} */}
+
       <BottomNav />
     </div>
   );
