@@ -45,15 +45,21 @@ const Profile = () => {
       </div>
       <div className="follower-stats">
         <div className="posts-sec">
-          <div className="posts-counter">0</div>
+          <div className="posts-counter">
+            {currUser ? currUser.postIDs.length : null}
+          </div>
           <div>posts</div>
         </div>
         <div className="follower-sec">
-          <div className="follower-counter">0</div>
+          <div className="follower-counter">
+            {currUser ? currUser.followers.length : null}
+          </div>
           <div>followers</div>
         </div>
         <div className="following-sec">
-          <div className="following-counter">0</div>
+          <div className="following-counter">
+            {currUser ? currUser.following.length : null}
+          </div>
           <div>following</div>
         </div>
       </div>

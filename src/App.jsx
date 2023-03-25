@@ -16,7 +16,7 @@ function App() {
         <Route path="/" element={user ? <Dashboard /> : <SignIn />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/upload" element={<UploadPost />} />
-        <Route path="/:postID" element={<PostPage />} />
+        <Route path="/post/:postID" element={<PostPage />} />
       </Routes>
     </BrowserRouter>
   );

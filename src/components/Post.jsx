@@ -47,7 +47,10 @@ const Post = ({ post }) => {
     <div className="post">
       <div className="post-prof-sec">
         <Link>
-          <span className="post-prof-sec-prof_pic"></span>
+          <img
+            className="post-prof-sec-prof_pic"
+            src={user ? user.photoURL : null}
+          />
           <span className="post-prof-sec-prof_name">{post.username}</span>
         </Link>
       </div>

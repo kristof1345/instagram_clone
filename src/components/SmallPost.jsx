@@ -19,7 +19,7 @@ const SmallPost = ({ postID }) => {
   }, []);
 
   return (
-    <Link to={`/${postID}`}>
+    <Link to={`/post/${postID}`}>
       <img src={post ? post.imageUrl : null} alt="image" className="img" />
     </Link>
   );

@@ -310,6 +310,30 @@ a {
   vertical-align: top;
 }
 
+.post_page-header {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.back {
+  font-size: 2rem;
+  padding: 8px 0 0 10px;
+  color: black;
+}
+
+.post_prof-sec {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 5px;
+}
+
+.post_page-post-img {
+  width: 100%;
+}
+
 @media (max-width: 500px) {
   .sign-in-logo {
     width: 300px;
