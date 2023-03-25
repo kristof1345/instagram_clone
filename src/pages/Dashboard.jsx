@@ -10,8 +10,6 @@ import Posts from "../components/Posts";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
-import { useEffect, useState } from "react";
-
 const Dashboard = () => {
   const [user] = useAuthState(auth);
   const collectionRef = collection(database, "posts");

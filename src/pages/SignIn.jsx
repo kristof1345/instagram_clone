@@ -2,21 +2,13 @@ import logo from "../../public/instagram_logo.png";
 
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
-import { v4 } from "uuid";
-
 import {
   collection,
   addDoc,
-  query,
   doc,
   updateDoc,
-  orderBy,
   getDocs,
 } from "firebase/firestore";
-
-import { useAuthState } from "react-firebase-hooks/auth";
-
-import { useCollectionData } from "react-firebase-hooks/firestore";
 
 import { app, database, auth, storage } from "../firebaseConfig";
 
@@ -58,7 +50,6 @@ const SignIn = () => {
     });
     if (arr.length > 0) {
       arr.map((user) => {
-        console.log(user);
         if (user.email == email) {
           res = false;
         }

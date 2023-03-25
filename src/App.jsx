@@ -3,6 +3,7 @@ import Dashboard from "./pages/Dashboard";
 import SignIn from "./pages/SignIn";
 import Profile from "./pages/Profile";
 import UploadPost from "./pages/UploadPost";
+import PostPage from "./pages/PostPage";
 import { app, auth } from "./firebaseConfig";
 
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={user ? <Dashboard /> : <SignIn />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/upload" element={<UploadPost />} />
+        <Route path="/:postID" element={<PostPage />} />
       </Routes>
     </BrowserRouter>
   );
