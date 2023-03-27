@@ -34,6 +34,7 @@ const UploadPost = () => {
             timestamp: serverTimestamp(),
             description: descUpload,
             imageUrl: url,
+            imageName: imageName,
             username: user.displayName,
             likes: 0,
             id: "",

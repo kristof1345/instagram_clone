@@ -204,6 +204,28 @@ a {
 .post-prof-sec {
   display: flex;
   padding: 5px 5px;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.three-dots {
+  font-size: 1.7rem;
+}
+
+.delete-overlay {
+  position: absolute;
+  top: 45px;
+  right: 15px;
+  background-color: white;
+  width: 100px;
+  height: 40px;
+  border-radius: 0.5rem;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 5px;
 }
 
 .post-prof-sec > a {
