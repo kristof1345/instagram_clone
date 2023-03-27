@@ -14,7 +14,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={user ? <Dashboard /> : <SignIn />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:uid" element={<Profile />} />
         <Route path="/upload" element={<UploadPost />} />
         <Route path="/post/:postID" element={<PostPage />} />
       </Routes>

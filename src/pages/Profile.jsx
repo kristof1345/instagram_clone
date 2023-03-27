@@ -2,6 +2,8 @@ import BottomNav from "../components/BottomNav";
 import NoPosts from "../components/NoPosts";
 import SmallPost from "../components/SmallPost";
 
+import { useParams } from "react-router-dom";
+
 import { collection, query } from "firebase/firestore";
 
 import { app, database, auth, storage } from "../firebaseConfig";
@@ -10,6 +12,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
 const Profile = () => {
+  const { uid } = useParams();
   const [user] = useAuthState(auth);
   let currUser;
 
@@ -19,7 +22,7 @@ const Profile = () => {
 
   if (users !== undefined && users.length !== 0) {
     users.map((userEl) => {
-      if (userEl.uid === user.uid) {
+      if (userEl.uid === uid) {
         currUser = userEl;
       }
     });
@@ -35,11 +38,18 @@ const Profile = () => {
             alt="profile picture"
           />
         </div>
-        <div className="prof_name">{user ? user.displayName : null}</div>
+        <div className="prof_name">
+          {currUser ? currUser.displayName : null}
+          {currUser ? (
+            currUser.uid !== user.uid ? (
+              <div className="follow_btn">Follow</div>
+            ) : null
+          ) : null}
+        </div>
       </div>
       <div className="prof_description-sec">
         <div className="user-name-changeable">
-          {user ? user.displayName : null}
+          {currUser ? currUser.displayName : null}
         </div>
         <div className="prof-description">eiroooer erob erb erobeorb</div>
       </div>

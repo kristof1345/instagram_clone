@@ -15,7 +15,7 @@ const BottomNav = () => {
       <Link to="/upload">
         <BiAddToQueue className="BN-icon" />
       </Link>
-      <Link to="/profile">
+      <Link to={`/profile/${user ? user.uid : null}`}>
         <img
           src={user ? user.photoURL : null}
           alt="user-image"

@@ -77,7 +77,7 @@ const Post = ({ post }) => {
   return (
     <div className="post">
       <div className="post-prof-sec">
-        <Link>
+        <Link to={`/profile/${post.uid}`}>
           <img
             className="post-prof-sec-prof_pic"
             src={user ? user.photoURL : null}

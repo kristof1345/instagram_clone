@@ -110,7 +110,7 @@ body {
 .stories {
   display: flex;
   gap: 10px;
-  padding: 5px 0 5px 10px;
+  padding: 5px 8px;
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
@@ -195,6 +195,7 @@ body {
 .post-prof-sec-prof_name {
   font-size: 0.9rem;
   color: black;
+  font-weight: 600;
 }
 
 a {
@@ -203,7 +204,7 @@ a {
 
 .post-prof-sec {
   display: flex;
-  padding: 5px 5px;
+  padding: 5px 8px;
   justify-content: space-between;
   align-items: center;
   position: relative;
@@ -226,6 +227,19 @@ a {
   flex-direction: column;
   align-items: center;
   padding: 10px 5px;
+}
+
+.follow_btn {
+  background-color: var(--btn);
+  border-radius: 1rem;
+  font-size: 1rem;
+  padding: 5px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8px;
+  font-weight: 100;
+  width: 100px;
 }
 
 .post-prof-sec > a {
