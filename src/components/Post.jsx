@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { ref, deleteObject } from "firebase/storage";
 import { TbDotsVertical } from "react-icons/tb";
-
+import { Link } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { app, database, auth, storage } from "../firebaseConfig";
 import {
   doc,
   updateDoc,
@@ -11,18 +13,12 @@ import {
   getDocs,
 } from "firebase/firestore";
 
-import { ref, deleteObject } from "firebase/storage";
-
-import { Link } from "react-router-dom";
-
-import { useAuthState } from "react-firebase-hooks/auth";
-
-import { app, database, auth, storage } from "../firebaseConfig";
-
 const Post = ({ post }) => {
   const [user] = useAuthState(auth);
   const [liked, setLiked] = useState(false);
   const [popUp, setPopUp] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [isValidSrc, setIsValidSrc] = useState(!post.imageUrlsrc);
 
   const updateLikes = () => {
     let likesCount = post.likes;
@@ -98,7 +94,23 @@ const Post = ({ post }) => {
         )}
       </div>
       <div className="post_pic-sec">
-        <img src={post.imageUrl} alt="post" className="post_pic" />
+        {isValidSrc ? (
+          <img
+            src={post.imageUrl}
+            alt="post"
+            className={`post_pic img-${imageLoaded ? "visible" : "hidden"}`}
+            onLoad={() => setImageLoaded(true)}
+            onError={() => setIsValidSrc(false)}
+            loading="lazy"
+          />
+        ) : (
+          <div className="smooth-no-image"></div>
+        )}
+        {isValidSrc && !imageLoaded && (
+          <div className="smooth-preloader">
+            <span className="loader" />
+          </div>
+        )}
       </div>
       <div className="interactions">
         {liked ? (

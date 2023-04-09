@@ -79,6 +79,7 @@ body {
   width: 100%;
   height: 50px;
   background-color: white;
+  z-index: 5;
 }
 
 .bottom-nav {
@@ -196,6 +197,52 @@ body {
   font-size: 0.9rem;
   color: black;
   font-weight: 600;
+}
+
+.post_pic-sec {
+  width: 393px;
+  height: 395px;
+  position: relative;
+}
+
+.img-visible {
+  opacity: 1;
+}
+
+.img-hidden {
+  opacity: 0;
+}
+
+.smooth-no-image {
+  width: 100%;
+  height: 100%;
+  background-color: #f2f2f2;
+}
+
+.smooth-preloader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(245, 245, 245, 0.34);
+}
+.loader {
+  background-image: linear-gradient(to right, #e6e6e6, #ffffff, #e6e6e6);
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  background-size: 200%;
+  animation: preloader-block 2s linear 0s infinite reverse forwards;
+}
+
+@keyframes preloader-block {
+  from {
+    background-position: 0%, 0;
+  }
+  to {
+    background-position: 170%, 0;
+  }
 }
 
 a {
