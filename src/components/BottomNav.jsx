@@ -2,7 +2,6 @@ import { BsHouse } from "react-icons/bs";
 import { BiAddToQueue } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { app, auth } from "../firebaseConfig";
-
 import { useAuthState } from "react-firebase-hooks/auth";
 
 const BottomNav = () => {
