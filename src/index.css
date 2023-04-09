@@ -242,6 +242,20 @@ a {
   width: 100px;
 }
 
+.unfollow_btn {
+  background-color: white;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  font-size: 1rem;
+  padding: 5px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8px;
+  font-weight: 100;
+  width: 100px;
+}
+
 .post-prof-sec > a {
   display: flex;
   align-items: center;

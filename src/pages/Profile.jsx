@@ -4,17 +4,32 @@ import SmallPost from "../components/SmallPost";
 
 import { useParams } from "react-router-dom";
 
-import { collection, query } from "firebase/firestore";
+import {
+  collection,
+  query,
+  doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+} from "firebase/firestore";
 
 import { app, database, auth, storage } from "../firebaseConfig";
 
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
+import { useState, useEffect } from "react";
 
 const Profile = () => {
   const { uid } = useParams();
   const [user] = useAuthState(auth);
   let currUser;
+  const [follow, setFollow] = useState(
+    JSON.parse(localStorage.getItem("follow")) || false
+  );
+
+  useEffect(() => {
+    localStorage.setItem("follow", JSON.stringify(follow)); //TODO not workingggggggggg
+  }, [follow]);
 
   const usersRef = collection(database, "users");
   const q = query(usersRef);
@@ -27,6 +42,48 @@ const Profile = () => {
       }
     });
   }
+
+  const followUser = async () => {
+    let followedID = "";
+    let followerID = "";
+    users.map((userX) => {
+      if (userX.uid === uid) {
+        followedID = userX.id;
+      }
+      if (userX.uid === user.uid) {
+        followerID = userX.id;
+      }
+    });
+    let followedRef = doc(database, "users", followedID);
+    let followerRef = doc(database, "users", followerID);
+    updateDoc(followedRef, {
+      followers: arrayUnion(user.uid),
+    });
+    updateDoc(followerRef, {
+      following: arrayUnion(uid),
+    });
+  };
+
+  const unfollowUser = async () => {
+    let followedID = "";
+    let followerID = "";
+    users.map((userX) => {
+      if (userX.uid === uid) {
+        followedID = userX.id;
+      }
+      if (userX.uid === user.uid) {
+        followerID = userX.id;
+      }
+    });
+    let followedRef = doc(database, "users", followedID);
+    let followerRef = doc(database, "users", followerID);
+    updateDoc(followedRef, {
+      followers: arrayRemove(user.uid),
+    });
+    updateDoc(followerRef, {
+      following: arrayRemove(uid),
+    });
+  };
 
   return (
     <div className="prof_page">
@@ -42,7 +99,27 @@ const Profile = () => {
           {currUser ? currUser.displayName : null}
           {currUser ? (
             currUser.uid !== user.uid ? (
-              <div className="follow_btn">Follow</div>
+              !follow ? (
+                <div
+                  className="follow_btn"
+                  onClick={() => {
+                    followUser();
+                    setFollow((prev) => !prev);
+                  }}
+                >
+                  Follow
+                </div>
+              ) : (
+                <div
+                  className="unfollow_btn"
+                  onClick={() => {
+                    unfollowUser();
+                    setFollow((prev) => !prev);
+                  }}
+                >
+                  Unfollow
+                </div>
+              )
             ) : null
           ) : null}
         </div>

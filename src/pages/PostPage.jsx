@@ -26,7 +26,7 @@ const PostPage = () => {
   return (
     <div className="post_page">
       <div className="post_page-header">
-        <Link className="back" to="/profile">
+        <Link className="back" to={`/profile/${post ? post.uid : null}`}>
           <BiArrowBack />
         </Link>
       </div>
